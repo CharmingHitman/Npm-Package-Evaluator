@@ -1,0 +1,36 @@
+.carousel-container {
+    margin: 100px auto;
+    display: flex;
+    max-width: 775px;
+    overflow-x: auto;
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 50%, transparent 100%);
+}
+.carousel-container::-webkit-scrollbar {
+    display: none;
+}
+@keyframes scroll {
+    from {translate: 0;}
+    to {translate: -100%;}
+}
+.group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    padding-right: 1em;
+    min-width: 100%;
+    animation: scroll 20s linear infinite;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+.analysis-card {
+    flex: 0 0 7.5em;
+    height : 5em;
+    padding: 1em;
+    background-color: #4e4e4e;
+    font-size: 1.2rem;
+    border-radius: .2em;
+    align-items: center;
+    border: 0.2px solid #ffae00;
+}
