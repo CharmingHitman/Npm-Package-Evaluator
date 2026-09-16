@@ -1,0 +1,24 @@
+.package-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.package-header-left-section {
+  display: flex;
+  align-items: first baseline;
+  gap: 30px;
+}
+.package-name {
+  color: white;
+  font-size: 26px;
+}
+.package-version {
+  color:darkgray
+}
+.package-header-right-section {
+  margin-left: 50px;
+  color: #ffae00;
+  border: solid 0.1px #ffae00;
+  padding: 10px;
+  border-radius: 40px;
+}
