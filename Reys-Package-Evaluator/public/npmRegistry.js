@@ -94,3 +94,31 @@ export async function enrichResults(results) {
     }),
   );
 }
+
+export async function getPackageDetails(name) {
+  const { data } = await axios.get(`https://registry.npmjs.org/${name}/latest`);
+  return {
+    name: data.name,
+    description: data.description,
+    version: data.version,
+    keywords: data.keywords ?? [],
+    license: data.license ?? 'Unknown',
+    dependencies: data.dependencies ?? {},
+    links: {
+      homepage: data.homepage,
+      repository: data.repository?.url,
+      bugs: data.bugs?.url,
+      npm: `https://www.npmjs.com/package/${data.name}`,
+    },
+    size: {
+      bytes: data.dist.unpackedSize,
+      kb: +(data.dist.unpackedSize / 1024).toFixed(1),
+    },
+    provenance: Boolean(data.dist?.attestations),
+    trustedPublisher: Boolean(data._npmUser?.trustedPublisher),
+    deprecated: data.deprecated ?? null,
+    installScripts: Boolean(
+      data.scripts?.preinstall || data.scripts?.install || data.scripts?.postinstall,
+    ),
+  };
+}
