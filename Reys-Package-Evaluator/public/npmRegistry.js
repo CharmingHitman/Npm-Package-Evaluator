@@ -97,12 +97,14 @@ export async function enrichResults(results) {
 
 export async function getPackageDetails(name) {
   const { data } = await axios.get(`https://registry.npmjs.org/${name}/latest`);
+  const vulns = await getVulnerabilities(name, data.version);
   return {
     name: data.name,
     description: data.description,
     version: data.version,
     keywords: data.keywords ?? [],
     license: data.license ?? 'Unknown',
+    author: data.publisher?.username ?? data.maintainers?.[0]?.username ?? 'Unknown',
     dependencies: data.dependencies ?? {},
     links: {
       homepage: data.homepage,
@@ -110,10 +112,12 @@ export async function getPackageDetails(name) {
       bugs: data.bugs?.url,
       npm: `https://www.npmjs.com/package/${data.name}`,
     },
+    lastPublished: data.date,
     size: {
       bytes: data.dist.unpackedSize,
       kb: +(data.dist.unpackedSize / 1024).toFixed(1),
     },
+    vulns,
     provenance: Boolean(data.dist?.attestations),
     trustedPublisher: Boolean(data._npmUser?.trustedPublisher),
     deprecated: data.deprecated ?? null,
@@ -121,4 +125,18 @@ export async function getPackageDetails(name) {
       data.scripts?.preinstall || data.scripts?.install || data.scripts?.postinstall,
     ),
   };
+}
+
+const OSI_APPROVED = new Set([
+  'MIT', 'Apache-2.0', 'BSD-2-Clause', 'BSD-3-Clause', 'ISC',
+  'GPL-2.0', 'GPL-2.0-only', 'GPL-3.0', 'GPL-3.0-only',
+  'LGPL-2.1', 'LGPL-3.0', 'MPL-2.0', 'AGPL-3.0', 'EPL-2.0',
+  'Unlicense', '0BSD', 'CC0-1.0',
+]);
+ 
+/**
+ * @param {string} license - an SPDX identifier, e.g. "MIT"
+ */
+export function isOsiApproved(license) {
+  return OSI_APPROVED.has(license);
 }
