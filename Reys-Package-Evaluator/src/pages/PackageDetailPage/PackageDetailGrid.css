@@ -42,3 +42,28 @@
 .cross {
   color: rgb(255, 48, 48);
 }
+.commit-area-chart {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+.commit-area-chart-labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #898781;
+  padding-right: 6px;
+}
+
+.commit-area-fill {
+  fill: rgba(239, 159, 39, 0.12);
+}
+
+.commit-area-line {
+  stroke: #ffae00;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
