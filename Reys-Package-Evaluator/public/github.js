@@ -16,7 +16,6 @@ export async function getRepoStats(owner, repo) {
       Authorization: `Bearer ${GITHUB_TOKEN}`
     }
   });
-  console.log('commit data:', data);
   return {
     stars: data.stargazers_count,
     forks: data.forks_count,

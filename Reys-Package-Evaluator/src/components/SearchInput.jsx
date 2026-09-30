@@ -1,12 +1,12 @@
-import { useState } from 'react';
 import searchLogo from '../assets/package-detective-icon-search.svg';
 import './SearchInput.css'
 import { useNavigate } from 'react-router';
+import { useState } from 'react';
 
-
-export function SearchInput({ loadSearch }) {
+export function SearchInput({ loadSearch,searchResults }) {
   const Navigate = useNavigate()
   const [query, setQuery] = useState('');
+
 
   return (
     <div className='Search-container'>
@@ -16,14 +16,18 @@ export function SearchInput({ loadSearch }) {
         }
         onKeyDown={async (input) => {
           if (input.key === 'Enter') {
-            Navigate('/search')
-            await loadSearch(query, 1);
+            Navigate(`/search/${query}`)
+            if (!searchResults) {
+              loadSearch(query, 1)
+            }
           }
         }}
       />
       <button className="search-button" onClick={async () => {
-        Navigate('/search')
-        await loadSearch(query, 1);
+        Navigate(`/search/${query}`)
+        if (!searchResults) {
+          loadSearch(query, 1)
+        }
       }}>
         <img className="search-icon" src={searchLogo} alt="Search" />
       </button>

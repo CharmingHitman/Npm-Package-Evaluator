@@ -1,18 +1,21 @@
-import { Link, useParams } from "react-router";
+import { Link, useParams, useNavigate } from "react-router";
 import './packageDetailPage.css'
 import { PackageDetailHeader } from "./PackageDetailHeader";
 import { PackageDetailGrid } from './PackageDetailGrid'
 import { getPackageDetails } from '../../../public/npmRegistry';
 import { useEffect, useState } from "react";
 import { getCommitActivity, parseGitHubRepo, getRepoStats } from "../../../public/github";
+import { fromPackageParam } from "../../components/utils";
 
 
 export function PackageDetailPage() {
-  const { packageName } = useParams();
+  const packageName = fromPackageParam(useParams().packageName);
   const [npmPackage, setNpmPackage] = useState(null);
   const [commitWeeks, setCommitWeeks] = useState([]);
   const [repoStats, setRepoStats] = useState(null);
   const [hasRepo, setHasRepo] = useState(true);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     async function fetchPackageDetail() {
@@ -40,7 +43,7 @@ export function PackageDetailPage() {
 
   return (
     <div className="Page">
-      <Link className='back-button' to={'/search/'}>&lt; Back to Search</Link>
+      <Link className='back-button' onClick={() => navigate(-1)}>&lt; Back to Search</Link>
       <PackageDetailHeader npmPackage={npmPackage} />
       <PackageDetailGrid npmPackage={npmPackage} commitWeeks={commitWeeks} hasRepo={hasRepo} repoStats={repoStats} />
     </div>

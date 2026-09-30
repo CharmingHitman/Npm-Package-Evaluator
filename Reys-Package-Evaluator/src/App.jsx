@@ -5,6 +5,7 @@ import { searchPackages, enrichResults } from '../public/npmRegistry';
 import { useState } from "react";
 import { PackageDetailPage } from "./pages/PackageDetailPage/PackageDetailPage";
 
+
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [currentPage, setCurrentPage] = useState([1]);
@@ -31,8 +32,8 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<HomePage loadSearch={loadSearch} />} />
-        <Route path="/search" element={<SearchResultPage setCurrentPage={setCurrentPage} currentPage={currentPage} isLoading={isLoading} searchResults={searchResults} loadSearch={loadSearch} total={total} />} />
-        <Route path="/package/:arrayNumber/:packageName" element={<PackageDetailPage loadSearch={loadSearch} searchResults={searchResults} />} />
+        <Route path="/search/:packageName" element={<SearchResultPage setCurrentPage={setCurrentPage} currentPage={currentPage} isLoading={isLoading} searchResults={searchResults} loadSearch={loadSearch} total={total} />} />
+        <Route path="/package/:packageName" element={<PackageDetailPage loadSearch={loadSearch} searchResults={searchResults} />} />
       </Routes>
     </>
   )

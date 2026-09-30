@@ -25,15 +25,19 @@ function getPageNumbers(current, total) {
   return withDots;
 }
 
-export function PageNumbers(setCurrentPage,currentPage,isLoading,total) {
+export function PageNumbers({ setCurrentPage, currentPage, isLoading, total, query, loadSearch }) {
 
-  let totalPages = Math.ceil(total/20);
+  let totalPages = Math.ceil(total / 20);
   return (
     <>
       <div className='pagination'>
         <button
           className='pagination-button'
-          onClick={() => setCurrentPage((p) => p - 1)}
+          onClick={() => {
+            setCurrentPage((p) => p - 1)
+            loadSearch(query, currentPage - 1)
+          }
+          }
           disabled={currentPage === 1 || isLoading}
         >
           Prev
@@ -46,7 +50,10 @@ export function PageNumbers(setCurrentPage,currentPage,isLoading,total) {
             <button
               key={item}
               className={item === currentPage ? 'pagination-number pagination-number-active' : 'pagination-number'}
-              onClick={() => setCurrentPage(item)}
+              onClick={() => {
+                setCurrentPage(item)
+                loadSearch(query,item)
+              }}
               disabled={isLoading}
             >
               {item}
@@ -56,7 +63,11 @@ export function PageNumbers(setCurrentPage,currentPage,isLoading,total) {
 
         <button
           className='pagination-button'
-          onClick={() => setCurrentPage((p) => p + 1)}
+          onClick={() => {
+            setCurrentPage((p) => p + 1)
+            loadSearch(query, currentPage + 1)
+          }
+          }
           disabled={currentPage >= total || isLoading}
         >
           Next

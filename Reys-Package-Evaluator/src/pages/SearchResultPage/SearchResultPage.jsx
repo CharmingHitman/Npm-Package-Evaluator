@@ -1,21 +1,34 @@
 import './SearchResultPage.css';
 import { SearchInput } from '../../components/SearchInput';
 import { PageNumbers } from './PageNumbers';
-import { Link } from 'react-router';
+import { Link, useParams } from 'react-router';
+import { toPackageRoute } from '../../components/utils';
+import { useEffect } from 'react';
+
 
 
 export function SearchResultPage({isLoading,searchResults,loadSearch,setCurrentPage,currentPage, total}) {
+  const packageName = useParams().packageName;
+  
+
+  useEffect(()=> {
+    async function fetchPackage() {
+      loadSearch(packageName,1)
+    }
+    fetchPackage();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+  
   return (
     <>
       <Link to={"/"} className='back-button'>&lt; Back</Link>
-      <SearchInput loadSearch={loadSearch} />
+      <SearchInput loadSearch={loadSearch} searchResult={searchResults} />
       <div className='result-count'>
         {isLoading ? 'Searching…' : `${total} results`}
       </div>
       <div className="search-results-container">
-        {searchResults.map((result, index) => (
+        {searchResults.map((result) => (
           <div className="search-result" key={result.name}>
-
             <div className='search-result-left-section'>
               <h3 className='result-package-name'>{result.name}</h3>
               <p className='result-package-description'>{result.description}</p>
@@ -26,14 +39,14 @@ export function SearchResultPage({isLoading,searchResults,loadSearch,setCurrentP
                 {result.vulns.length ? `${result.vulns.length} issue${result.vulns.length > 1 ? 'flagged' : ''}` : 'Clean'}
               </div>
               <div className='result-size'>{result.size.kb} kB</div>
-              <Link className='result-button' to={`/package/${index}/${result.name}/`}>&gt;</Link>
+              <Link className='result-button' to={toPackageRoute(result.name)}>&gt;</Link>
             </div>
 
           </div>
         ))}
       </div>
 
-      <PageNumbers setCurrentPage={setCurrentPage} currentPage={currentPage} isLoading={isLoading} total ={total} />
+      <PageNumbers loadSearch={loadSearch} setCurrentPage={setCurrentPage} currentPage={currentPage} isLoading={isLoading} total ={total} query={packageName} />
     </>
   )
 }

@@ -1,13 +1,16 @@
 import './PackageDetailGrid.css';
 import { isOsiApproved } from '../../../public/npmRegistry';
-import {timeAgo} from '../../../public/github'
+import { timeAgo } from '../../../public/github'
 
 
-export function PackageDetailGrid({ npmPackage,commitWeeks,hasRepo,repoStats }) {
-  
+export function PackageDetailGrid({ npmPackage, commitWeeks, hasRepo, repoStats }) {
+  const depNames = Object.keys(npmPackage.dependencies);
+  const maxShown = 11;
+  const extra = depNames.length - maxShown;
 
   return (
     <div className="package-grid-container">
+
       <div className="grid-card">
         <div className="grid-card-title">Bundle size</div>
         <div className="grid-card-content-1">
@@ -112,38 +115,63 @@ export function PackageDetailGrid({ npmPackage,commitWeeks,hasRepo,repoStats }) 
       </div>
 
       <div className="grid-card">
-  <div className="grid-card-title">Activity</div>
+        <div className="grid-card-title">Activity</div>
 
-  {!hasRepo ? (
-    <div className="grid-card-content-2">no GitHub repository linked</div>
-  ) : (
-    <>
-      <div className="grid-card-content-2">
-        {commitWeeks.length > 0 ? (
-          <CommitAreaChart weeks={commitWeeks} />
+        {!hasRepo ? (
+          <div className="grid-card-content-2">no GitHub repository linked</div>
         ) : (
-          <span className="activity-empty">no commit activity available</span>
+          <>
+            <div className="grid-card-content-2">
+              {commitWeeks.length > 0 ? (
+                <CommitAreaChart weeks={commitWeeks} />
+              ) : (
+                <span className="activity-empty">no commit activity available</span>
+              )}
+            </div>
+
+            {repoStats && (
+              <>
+                <div className="grid-card-content-2">
+                  &#9733; {repoStats.stars.toLocaleString()} &middot; &#9282; {repoStats.forks.toLocaleString()}
+                </div>
+
+                <div className="grid-card-content-2">
+                  &#9888; {repoStats.openIssues.toLocaleString()} open issues
+                </div>
+
+                <div className="grid-card-content-2">
+                  last commit {timeAgo(repoStats.lastPush)}
+                </div>
+              </>
+            )}
+          </>
         )}
       </div>
 
-      {repoStats && (
-        <>
-          <div className="grid-card-content-2">
-            &#9733; {repoStats.stars.toLocaleString()} &middot; &#9282; {repoStats.forks.toLocaleString()}
-          </div>
+      <div className="grid-card">
+        <div className="grid-card-title">Dependencies</div>
 
-          <div className="grid-card-content-2">
-           &#9888; {repoStats.openIssues.toLocaleString()} open issues
-          </div>
+        <div className="grid-card-content-2">
+          {depNames.length === 0 ? (
+            <>
+              <span className="check">&#x2714;</span> no dependencies
+            </>
+          ) : (
+            `${depNames.length} direct ${depNames.length === 1 ? "dependency" : "dependencies"}`
+          )}
+        </div> <br />
 
-          <div className="grid-card-content-2">
-            last commit {timeAgo(repoStats.lastPush)}
+        {depNames.length > 0 && (
+          <div className="grid-card-content-2 dependency-grid">
+            {depNames.slice(0, maxShown).map((dep) => (
+              <span key={dep} className="dependency-chip">{dep}</span>
+            ))}
+            {extra > 0 && (
+              <span className="dependency-chip dependency-chip-more">+{extra} more</span>
+            )}
           </div>
-        </>
-      )}
-    </>
-  )}
-</div>
+        )}
+      </div>
     </div>
   )
 };
