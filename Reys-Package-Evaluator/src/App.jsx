@@ -32,7 +32,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<HomePage loadSearch={loadSearch} />} />
-        <Route path="/search/:packageName" element={<SearchResultPage setCurrentPage={setCurrentPage} currentPage={currentPage} isLoading={isLoading} searchResults={searchResults} loadSearch={loadSearch} total={total} />} />
+        <Route path="/search/" element={<SearchResultPage setCurrentPage={setCurrentPage} currentPage={currentPage} isLoading={isLoading} searchResults={searchResults} loadSearch={loadSearch} total={total} />} />
         <Route path="/package/:packageName" element={<PackageDetailPage loadSearch={loadSearch} searchResults={searchResults} />} />
       </Routes>
     </>

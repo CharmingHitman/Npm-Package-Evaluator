@@ -1,19 +1,19 @@
 import './SearchResultPage.css';
 import { SearchInput } from '../../components/SearchInput';
 import { PageNumbers } from './PageNumbers';
-import { Link, useParams } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import { toPackageRoute } from '../../components/utils';
 import { useEffect } from 'react';
 
 
 
 export function SearchResultPage({isLoading,searchResults,loadSearch,setCurrentPage,currentPage, total}) {
-  const packageName = useParams().packageName;
-  
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get('q') ?? '';
 
   useEffect(()=> {
     async function fetchPackage() {
-      loadSearch(packageName,1)
+      loadSearch(query,currentPage);
     }
     fetchPackage();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,7 +46,7 @@ export function SearchResultPage({isLoading,searchResults,loadSearch,setCurrentP
         ))}
       </div>
 
-      <PageNumbers loadSearch={loadSearch} setCurrentPage={setCurrentPage} currentPage={currentPage} isLoading={isLoading} total ={total} query={packageName} />
+      <PageNumbers loadSearch={loadSearch} setCurrentPage={setCurrentPage} currentPage={currentPage} isLoading={isLoading} total ={total} query={query} />
     </>
   )
 }
