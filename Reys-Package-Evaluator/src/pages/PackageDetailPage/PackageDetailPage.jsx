@@ -1,5 +1,5 @@
 import { Link, useParams, useNavigate } from "react-router";
-import './packageDetailPage.css'
+import '../PackageDetailPage/PackageDetailPage.css';
 import { PackageDetailHeader } from "./PackageDetailHeader";
 import { PackageDetailGrid } from './PackageDetailGrid'
 import { getPackageDetails } from '../../../public/npmRegistry';

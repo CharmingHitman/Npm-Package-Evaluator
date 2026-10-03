@@ -5,6 +5,13 @@
   gap: 40px;
   width: 80vw;
 }
+
+@media (max-width: 640px) {
+  .package-grid-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
 .grid-card {
   background-color: #252525;
   padding: 10px;
