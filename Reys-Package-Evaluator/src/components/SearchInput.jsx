@@ -15,7 +15,7 @@ export function SearchInput({ loadSearch, searchResults }) {
     }
   }
 
-  return (
+  return ( 
     <div className='Search-container'>
       <input className="search-input" type="text" placeholder="Search for a package..." value={query}
         onChange={
