@@ -1,0 +1,29 @@
+.header-container {
+    display: flex;
+    justify-content: start;
+    font-weight: 200;
+    position: relative;
+    margin-bottom: 7vh;
+}
+.header{
+    margin-left: 3vw;
+    display: flex;
+    font-family:'Ubuntu Mono';
+    font-size: 1rem;
+    top: 0.2vh;
+    position: relative;
+    align-items: center;
+}
+.header-logo{
+    height: 100px;
+    width: 135px;
+}
+.case-open-logo{
+    position: absolute;
+    right: 6vw;
+    top: 7vh;
+    height: 150px;
+    width: 150px;
+    rotate: 27deg;
+    filter: opacity(0.75);
+}

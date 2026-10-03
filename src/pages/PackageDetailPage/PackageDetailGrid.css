@@ -1,0 +1,92 @@
+.package-grid-container {
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 40px;
+  width: 80vw;
+}
+
+@media (max-width: 640px) {
+  .package-grid-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+.grid-card {
+  background-color: #252525;
+  padding: 10px;
+  border-radius: 15px;
+  min-height: 150px;
+}
+.grid-card-title {
+  color: #ffae00;
+  margin-bottom: 10px;
+  font-weight: 200;
+}
+.grid-card-content-1 {
+  display: flex;
+  justify-content: space-between;
+}
+.size-bar-container {
+  height: 25px;
+  width: 100%;
+  border: 1px solid rgb(93, 93, 93);
+  border-radius: 50px;
+  overflow: hidden;
+}
+.size-bar {
+  height: 100%;
+  background-color: #ffae00;
+  border-radius: 50px;
+  width: 50%;
+}
+.grid-card-content-2 {
+  color: antiquewhite;
+}
+.check {
+  color: #ffae00;
+}
+.cross {
+  color: rgb(255, 48, 48);
+}
+.commit-area-chart {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+.commit-area-chart-labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #898781;
+  padding-right: 6px;
+}
+
+.commit-area-fill {
+  fill: rgba(239, 159, 39, 0.12);
+}
+
+.commit-area-line {
+  stroke: #ffae00;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.dependency-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.dependency-chip {
+  border: 1px solid currentColor;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
